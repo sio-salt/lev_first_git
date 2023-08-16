@@ -22,23 +22,35 @@ class PostController extends Controller
      * 
      * @params Object Post // 引数の$postはid=1のPostインスタンス
      * @return Response post view
-     */
-     public function show(Post $post)
-     {
-         return view('posts.show')->with(['post' => $post]);
-         // 'post'はbladeファイルで使う変数。中身の$postはid=1のPostインスタンス
-     }
-     
-     public function create() 
-     {
-         return view('posts.create');
-     }
-     
-     public function store(Post $post, PostRequest $request)  
-     {
-         $input = $request['post'];
-         $post->fill($input)->save();
-         return redirect('/posts/' . $post->id);
-     }
+    */
+    public function show(Post $post)
+    {
+     return view('posts.show')->with(['post' => $post]);
+     // 'post'はbladeファイルで使う変数。中身の$postはid=1のPostインスタンス
+    }
+    
+    public function create() 
+    {
+     return view('posts.create');
+    }
+    
+    public function store(PostRequest $request, Post $post) 
+    {
+     $input = $request['post'];
+     $post->fill($input)->save();
+     return redirect('/posts/' . $post->id);
+    }
+    
+    public function edit(Post $post)
+    {
+     return view('posts.edit')->with(['post' => $post]);
+    }
+    
+    public function update(PostRequest $request, Post $post)
+    {
+        $input_post = $request['post'];
+        $post->fill($input_post)->save();
+        return redirect('/posts/' . $post->id);
+    }
 }
 ?>
