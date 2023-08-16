@@ -12,7 +12,7 @@
             {{ $post->title }} 
         </h1>
         <div class="content">
-            <div class="content_post">
+            <div class="content__post">
                 <h3>本文</h3>
                 <p>{{ $post->body }}</p>
             </div>
