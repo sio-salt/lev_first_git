@@ -14,7 +14,8 @@ class Post extends Model
     protected $fillable = [
         'title',
         'body',
-        ];
+        'category_id',
+    ];
     
     public function getByLimit(int $limit_count = 5)
     {
@@ -25,6 +26,13 @@ class Post extends Model
     public function getPaginateByLimit(int $limit_count = 5)
     {
         // updated_atの降順で並べ、limitをかける。
-        return $this->orderBy('updated_at', 'DESC')->paginate($limit_count);
+        return $this::with('category')->orderBy('updated_at', 'DESC')->paginate($limit_count);
+    }
+    
+    // Categoryに対するリレーション
+    // 1対多の関係なので単数形に
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

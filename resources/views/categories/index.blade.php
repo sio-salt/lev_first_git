@@ -13,9 +13,9 @@
             @foreach ($posts as $post)
                 <div class='post'>
                     <h2 class='title'>
-                        <a href="/posts/{{ $post->id }}">{{ $post->title }}</a>
+                        <a href="/categories/{{ $post->category->id }}">{{ $post->category->name }}</a>
                     </h2>
-                    <a href="/categories/{{ $post->category->id }}">{{ $post->category->name }}</a>
+                    <a href="">{{ $post->category->name }}</a>
                     <!--<a href="/posts/{{ $post->id }}"><h2 class='title'>{{ $post->title }}</h2></a>-->
                     <p class='body'>{{ $post->body }}</p>
                     <form action="/posts/{{ $post->id }}" id="form_{{ $post->id }}" method="post">
@@ -28,6 +28,9 @@
         </div>
         <div class='paginate'>
             {{ $posts->links() }}
+        </div>
+        <div class="footer">
+            <a href="/">ホームに戻る</a>
         </div>
         <script>
             function deletePost(id) {
