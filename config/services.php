@@ -31,4 +31,7 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'terarail' => [
+        'token' => env('TERATAIL_ACCESS_TOKEN')
+    ],
 ];

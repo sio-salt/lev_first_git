@@ -14,8 +14,32 @@ class PostController extends Controller
         /* $test = $post->orderBy('updated_at', 'DESC')->limit(2)->toSql() ; //確認用 */
         /* dd($test); //確認用 */
         // return view('posts.index')->with(['posts' => $post->get()]);  
-        return view('posts.index')->with(['posts' => $post->getPaginateByLimit()]);
-       //blade内で使う変数'posts'と設定。'posts'の中身にgetを使い、インスタンス化した$postを代入。
+        // return view('posts.index')->with(['posts' => $post->getPaginateByLimit()]);
+        // //blade内で使う変数'posts'と設定。'posts'の中身にgetを使い、インスタンス化した$postを代入。
+       
+       // クライアントインスタンス生成
+       $client = new \GuzzleHttp\Client();
+       
+       // GET通信するURL
+       $url = 'https://teratail.com/api/v1/questions';
+       
+       // リクエスト送信と返却データの取得
+       // Bearerトークンにアクセストークンを指定して認証を行う
+       $response = $client->request(
+           'GET',
+           $url,
+           ['Beareer' => config('servises.taratail.token')]
+       );
+       
+       // API通信で取得したjsonデータをphp二対応した連想配列にデコードする
+       $questions = json_decode($response->getBody(), true);
+       
+       // index bladeに取得したデータを渡す
+       return view('posts.index')->with([
+           'posts' => $post->getPaginateByLimit(),
+           'questions' => $questions['questions'],
+       ]);
+       
     }
     
     /**
